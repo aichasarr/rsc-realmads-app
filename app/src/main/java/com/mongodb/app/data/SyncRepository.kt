@@ -140,8 +140,8 @@ class RealmSyncRepository(
         realm.subscriptions.update {
             removeAll()
             val query = when (subscriptionType) {
-                SubscriptionType.MINE -> getQuery(realm, SubscriptionType.MINE)
                 SubscriptionType.ALL -> getQuery(realm, SubscriptionType.ALL)
+                SubscriptionType.MINE -> getQuery(realm, SubscriptionType.MINE)
             }
             add(query, subscriptionType.name)
         }
