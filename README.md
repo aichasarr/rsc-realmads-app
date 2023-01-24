@@ -19,4 +19,4 @@ Appcircle is an easy-to-use mobile CI/CD platform that manages mobile app lifecy
 Appetize.io enables you to run native iOS and Android mobile apps directly in your browser. No downloads, plugins, or extra permissions needed.
 
 
-Please use [document](https://docs.google.com/document/d/1ldX4c4JLs36pfnIqK8j9Tblx561QSevy85ZXilnMd5E/edit#heading=h.y6269l79uwg) for the demo script, setup and execution.
+Please use this [document](https://docs.google.com/document/d/1ldX4c4JLs36pfnIqK8j9Tblx561QSevy85ZXilnMd5E/edit#heading=h.y6269l79uwg) for the demo script, setup and execution.
