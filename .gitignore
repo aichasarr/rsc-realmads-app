@@ -17,6 +17,7 @@ captures/
 *.ap_
 *.aab
 output.json
+app/output/
 
 # Android Studio
 *.iml
