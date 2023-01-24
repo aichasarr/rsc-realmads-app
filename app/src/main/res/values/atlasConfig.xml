@@ -1,0 +1,6 @@
+<resources>
+    <string name="realm_app_id">atlas-devicesync-demo-laawp</string>
+    <string name="realm_app_url">https://realm.mongodb.com/groups/623ca04ebd09773fbfee5836/apps/63939d8677f497387c3761f8</string>
+    <string name="realm_base_url">https://realm.mongodb.com</string>
+    <string name="realm_data_source_name">mongodb-atlas</string>
+</resources>

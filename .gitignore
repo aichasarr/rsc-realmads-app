@@ -1,0 +1,57 @@
+# Gradle files
+.gradle/
+build/
+app/build
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Log/OS Files
+*.log
+
+# Android Studio generated files and folders
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.ap_
+*.aab
+output.json
+
+# Android Studio
+*.iml
+.idea/
+.navigation
+output.json
+
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+
+# Keystore files
+*.jks
+*.keystore
+
+# Android Profiling
+*.hprof
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Windows thumbnail db
+Thumbs.db
+
+# OSX files
+.DS_Store
+*.DS_Store
+
+#NDK
+obj/
+.externalNativeBuild
