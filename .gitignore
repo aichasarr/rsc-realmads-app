@@ -22,7 +22,6 @@ output.json
 *.iml
 .idea/
 .navigation
-output.json
 
 misc.xml
 deploymentTargetDropDown.xml
