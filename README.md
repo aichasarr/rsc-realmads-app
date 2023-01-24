@@ -14,9 +14,9 @@ The demo uses the new Flexible Sync subscription to only show items within a ran
 To make life easier for SA, there is no need to download and install android studio on your local environment and use an emulator. We have used online tools to build the artifacts and run the mobile application directly in a virtual device on your browser. These tools are respectively AppCircle and Appetize.
 
 
-Appcircle is an easy-to-use mobile CI/CD platform that manages mobile app lifecycle end-to-end. You can build your iOS, Android, React Native, Flutter apps within seconds, run tests and distribute to tester groups and App Stores.
+__Appcircle__ is an easy-to-use mobile CI/CD platform that manages mobile app lifecycle end-to-end. You can build your iOS, Android, React Native, Flutter apps within seconds, run tests and distribute to tester groups and App Stores.
 
-Appetize.io enables you to run native iOS and Android mobile apps directly in your browser. No downloads, plugins, or extra permissions needed.
+__Appetize.io__ enables you to run native iOS and Android mobile apps directly in your browser. No downloads, plugins, or extra permissions needed.
 
 
 Please use this [document](https://docs.google.com/document/d/1ldX4c4JLs36pfnIqK8j9Tblx561QSevy85ZXilnMd5E/edit#heading=h.y6269l79uwg) for the demo script, setup and execution.
