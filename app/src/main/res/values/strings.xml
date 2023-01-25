@@ -10,7 +10,8 @@
     <string name="log_out">Log Out</string>
     <string name="airplane_mode">Airplane Mode</string>
     <string name="show_completed_tasks_only">Show completed tasks only</string>
-    <string name="mine">Mine</string>
+    <!--<string name="mine">Mine</string>-->
+    <string name="mine"></string>
     <string name="more">\u22EE</string>
     <string name="delete">Delete</string>
     <string name="add_item">Add Item</string>
@@ -19,7 +20,7 @@
     <string name="create">Create</string>
     <string name="item_summary">Item Summary</string>
     <string name="permissions_error">You are not allowed to delete or modify tasks that don\'t belong to you.</string>
-    <string name="show_all_tasks">Show all tasks</string>
+    <string name="show_all_tasks"> Tasks with priorities High and Severe</string>
     <string name="sync_message">Log in with the same account on another device or simulator to see your list sync in real-time</string>
     <string name="account_clarification">Please log in or register with a Realm/Device Sync user account.</string>
     <string name="unable_to_switch">Switching subscriptions does not affect Realm data when Sync is offline</string>

@@ -180,7 +180,7 @@ class RealmSyncRepository(
 
     private fun getQuery(realm: Realm, subscriptionType: SubscriptionType): RealmQuery<Item> =
         when (subscriptionType) {
-            SubscriptionType.ALL -> realm.query()
+            SubscriptionType.ALL -> realm.query("owner_id == $0", currentUser.id)
             SubscriptionType.MINE -> realm.query("owner_id == $0 AND priority <= ${PriorityLevel.High.ordinal}", currentUser.id)
 
         }
