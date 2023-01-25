@@ -55,7 +55,7 @@ fun OwnerSwitch(
 ) {
     Switch(
         checked = when (viewModel.subscriptionType.value) {
-            SubscriptionType.MINE -> false
+            SubscriptionType.FILTERED -> false
             SubscriptionType.ALL -> true
         },
         onCheckedChange = {
@@ -63,8 +63,8 @@ fun OwnerSwitch(
                 viewModel.showOfflineMessage()
             } else {
                 val updatedSubscriptionType = when (viewModel.subscriptionType.value) {
-                    SubscriptionType.MINE -> SubscriptionType.ALL
-                    SubscriptionType.ALL -> SubscriptionType.MINE
+                    SubscriptionType.FILTERED -> SubscriptionType.ALL
+                    SubscriptionType.ALL -> SubscriptionType.FILTERED
                 }
                 viewModel.updateSubscription(updatedSubscriptionType)
             }

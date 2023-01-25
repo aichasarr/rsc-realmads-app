@@ -93,7 +93,7 @@ class RealmSyncRepository(
     init {
         config = SyncConfiguration.Builder(currentUser, setOf(Item::class))
             .initialSubscriptions(rerunOnOpen = true) { realm ->
-                // Subscribe to the active subscriptionType - first time defaults to MINE
+                // Subscribe to the active subscriptionType - first time defaults to ALL tasks
                 val activeSubscriptionType = getActiveSubscriptionType(realm)
                 add(getQuery(realm, activeSubscriptionType), activeSubscriptionType.name, updateExisting = true)
             }
@@ -141,7 +141,7 @@ class RealmSyncRepository(
             removeAll()
             val query = when (subscriptionType) {
                 SubscriptionType.ALL -> getQuery(realm, SubscriptionType.ALL)
-                SubscriptionType.MINE -> getQuery(realm, SubscriptionType.MINE)
+                SubscriptionType.FILTERED -> getQuery(realm, SubscriptionType.FILTERED)
             }
             add(query, subscriptionType.name)
         }
@@ -161,7 +161,7 @@ class RealmSyncRepository(
         return when (val name = firstOrNull?.name) {
             null,
             SubscriptionType.ALL.name -> SubscriptionType.ALL
-            SubscriptionType.MINE.name -> SubscriptionType.MINE
+            SubscriptionType.FILTERED.name -> SubscriptionType.FILTERED
             else -> throw IllegalArgumentException("Invalid Realm Sync subscription: '$name'")
         }
     }
@@ -181,7 +181,7 @@ class RealmSyncRepository(
     private fun getQuery(realm: Realm, subscriptionType: SubscriptionType): RealmQuery<Item> =
         when (subscriptionType) {
             SubscriptionType.ALL -> realm.query("owner_id == $0", currentUser.id)
-            SubscriptionType.MINE -> realm.query("owner_id == $0 AND priority <= ${PriorityLevel.High.ordinal}", currentUser.id)
+            SubscriptionType.FILTERED -> realm.query("owner_id == $0 AND priority <= ${PriorityLevel.High.ordinal}", currentUser.id)
 
         }
 }
@@ -203,7 +203,7 @@ class MockRepository : SyncRepository {
 
     companion object {
         const val MOCK_OWNER_ID_MINE = "A"
-        const val MOCK_OWNER_ID_OTHER = "B"
+        const val MOCK_OWNER_ID_FILTERED = "B"
 
         fun getMockTask(index: Int): Item = Item().apply {
             this.summary = "Task $index"
@@ -214,15 +214,15 @@ class MockRepository : SyncRepository {
             // Make every other task mine in preview
             this.owner_id = when {
                 index % 2 == 0 -> MOCK_OWNER_ID_MINE
-                else -> MOCK_OWNER_ID_OTHER
+                else -> MOCK_OWNER_ID_FILTERED
             }
         }
     }
 }
 
 /**
- * The two types of subscriptions according to item owner.
+ * The two types of subscriptions according to task priorities.
  */
 enum class SubscriptionType {
-    MINE, ALL
+    FILTERED, ALL
 }

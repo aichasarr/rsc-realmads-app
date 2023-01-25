@@ -10,8 +10,7 @@
     <string name="log_out">Log Out</string>
     <string name="airplane_mode">Airplane Mode</string>
     <string name="show_completed_tasks_only">Show completed tasks only</string>
-    <!--<string name="mine">Mine</string>-->
-    <string name="mine"></string>
+    <string name="mine">Mine</string>
     <string name="more">\u22EE</string>
     <string name="delete">Delete</string>
     <string name="add_item">Add Item</string>
