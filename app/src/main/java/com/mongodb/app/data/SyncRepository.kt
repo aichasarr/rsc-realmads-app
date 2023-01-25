@@ -140,8 +140,8 @@ class RealmSyncRepository(
         realm.subscriptions.update {
             removeAll()
             val query = when (subscriptionType) {
-                SubscriptionType.ALL -> getQuery(realm, SubscriptionType.ALL)
                 SubscriptionType.FILTERED -> getQuery(realm, SubscriptionType.FILTERED)
+                SubscriptionType.ALL -> getQuery(realm, SubscriptionType.ALL)
             }
             add(query, subscriptionType.name)
         }
@@ -160,8 +160,8 @@ class RealmSyncRepository(
         val firstOrNull = subscriptions.firstOrNull()
         return when (val name = firstOrNull?.name) {
             null,
-            SubscriptionType.ALL.name -> SubscriptionType.ALL
             SubscriptionType.FILTERED.name -> SubscriptionType.FILTERED
+            SubscriptionType.ALL.name -> SubscriptionType.ALL
             else -> throw IllegalArgumentException("Invalid Realm Sync subscription: '$name'")
         }
     }
@@ -180,9 +180,8 @@ class RealmSyncRepository(
 
     private fun getQuery(realm: Realm, subscriptionType: SubscriptionType): RealmQuery<Item> =
         when (subscriptionType) {
-            SubscriptionType.ALL -> realm.query("owner_id == $0", currentUser.id)
             SubscriptionType.FILTERED -> realm.query("owner_id == $0 AND priority <= ${PriorityLevel.High.ordinal}", currentUser.id)
-
+            SubscriptionType.ALL -> realm.query("owner_id == $0", currentUser.id)
         }
 }
 
