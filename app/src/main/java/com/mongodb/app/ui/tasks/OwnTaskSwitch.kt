@@ -55,16 +55,16 @@ fun OwnerSwitch(
 ) {
     Switch(
         checked = when (viewModel.subscriptionType.value) {
-            SubscriptionType.FILTERED -> false
-            SubscriptionType.ALL -> true
+            SubscriptionType.ALL -> false
+            SubscriptionType.FILTERED -> true
         },
         onCheckedChange = {
             if (toolbarViewModel.offlineMode.value) {
                 viewModel.showOfflineMessage()
             } else {
                 val updatedSubscriptionType = when (viewModel.subscriptionType.value) {
-                    SubscriptionType.FILTERED -> SubscriptionType.ALL
                     SubscriptionType.ALL -> SubscriptionType.FILTERED
+                    SubscriptionType.FILTERED -> SubscriptionType.ALL
                 }
                 viewModel.updateSubscription(updatedSubscriptionType)
             }
