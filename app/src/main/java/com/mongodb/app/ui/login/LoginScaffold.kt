@@ -42,7 +42,7 @@ fun LoginScaffold(loginViewModel: LoginViewModel) {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
-                        .fillMaxHeight(0.25f)
+                        .fillMaxHeight(0.20f)
                         .fillMaxWidth()
                 ) {
                     Text(
