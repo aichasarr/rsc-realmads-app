@@ -16,13 +16,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.mongodb.app.R
 import com.mongodb.app.data.MockRepository
-import com.mongodb.app.domain.Item
+import com.mongodb.app.domain.RSCItem
 import com.mongodb.app.presentation.tasks.ItemContextualMenuViewModel
 import com.mongodb.app.presentation.tasks.TaskViewModel
 import com.mongodb.app.ui.theme.MyApplicationTheme
 
 @Composable
-fun ItemContextualMenu(viewModel: ItemContextualMenuViewModel, task: Item) {
+fun ItemContextualMenu(viewModel: ItemContextualMenuViewModel, task: RSCItem) {
     Box(
         contentAlignment = Alignment.Center
     ) {
@@ -65,7 +65,7 @@ fun ItemContextualMenuPreview() {
                     repository,
                     TaskViewModel(repository, mutableStateListOf())
                 ),
-                Item()
+                RSCItem()
             )
         }
     }

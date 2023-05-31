@@ -11,7 +11,7 @@ enum class PriorityLevel() {
     Low     // priority 3
 }
 
-class Item() : RealmObject {
+class RSCItem() : RealmObject {
     @PrimaryKey
     var _id: ObjectId = ObjectId.create()
     var isComplete: Boolean = false
@@ -25,7 +25,7 @@ class Item() : RealmObject {
 
     override fun equals(other: Any?): Boolean {
         if (other == null) return false
-        if (other !is Item) return false
+        if (other !is RSCItem) return false
         if (this._id != other._id) return false
         if (this.isComplete != other.isComplete) return false
         if (this.summary != other.summary) return false

@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.savedstate.SavedStateRegistryOwner
 import com.mongodb.app.data.SyncRepository
-import com.mongodb.app.domain.Item
+import com.mongodb.app.domain.RSCItem
 import io.realm.kotlin.notifications.InitialResults
 import io.realm.kotlin.notifications.ResultsChange
 import io.realm.kotlin.notifications.UpdatedResults
@@ -23,7 +23,7 @@ object TaskViewEvent
 
 class TaskViewModel constructor(
     private val repository: SyncRepository,
-    val taskListState: SnapshotStateList<Item> = mutableStateListOf()
+    val taskListState: SnapshotStateList<RSCItem> = mutableStateListOf()
 ) : ViewModel() {
 
     private val _event: MutableSharedFlow<TaskViewEvent> = MutableSharedFlow()
@@ -33,7 +33,7 @@ class TaskViewModel constructor(
     init {
         viewModelScope.launch {
             repository.getTaskList()
-                .collect { event: ResultsChange<Item> ->
+                .collect { event: ResultsChange<RSCItem> ->
                     when (event) {
                         is InitialResults -> {
                             taskListState.clear()
@@ -63,7 +63,7 @@ class TaskViewModel constructor(
         }
     }
 
-    fun toggleIsComplete(task: Item) {
+    fun toggleIsComplete(task: RSCItem) {
         CoroutineScope(Dispatchers.IO).launch {
             repository.toggleIsComplete(task)
         }
@@ -75,7 +75,7 @@ class TaskViewModel constructor(
         }
     }
 
-    fun isTaskMine(task: Item): Boolean = repository.isTaskMine(task)
+    fun isTaskMine(task: RSCItem): Boolean = repository.isTaskMine(task)
 
     companion object {
         fun factory(

@@ -2,8 +2,8 @@ package com.mongodb.app.data
 import com.mongodb.app.domain.PriorityLevel
 
 
-import com.mongodb.app.domain.Item
 import com.mongodb.app.app
+import com.mongodb.app.domain.RSCItem
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.mongodb.User
@@ -30,12 +30,12 @@ interface SyncRepository {
     /**
      * Returns a flow with the tasks for the current subscription.
      */
-    fun getTaskList(): Flow<ResultsChange<Item>>
+    fun getTaskList(): Flow<ResultsChange<RSCItem>>
 
     /**
-     * Update the `isComplete` flag for a specific [Item].
+     * Update the `isComplete` flag for a specific [RSCItem].
      */
-    suspend fun toggleIsComplete(task: Item)
+    suspend fun toggleIsComplete(task: RSCItem)
 
     /**
      * Adds a task that belongs to the current user using the specified [taskSummary].
@@ -50,7 +50,7 @@ interface SyncRepository {
     /**
      * Deletes a given task.
      */
-    suspend fun deleteTask(task: Item)
+    suspend fun deleteTask(task: RSCItem)
 
     /**
      * Returns the active [SubscriptionType].
@@ -70,7 +70,7 @@ interface SyncRepository {
     /**
      * Whether the given [task] belongs to the current user logged in to the app.
      */
-    fun isTaskMine(task: Item): Boolean
+    fun isTaskMine(task: RSCItem): Boolean
 
     /**
      * Closes the realm instance held by this repository.
@@ -91,7 +91,7 @@ class RealmSyncRepository(
         get() = app.currentUser!!
 
     init {
-        config = SyncConfiguration.Builder(currentUser, setOf(Item::class))
+        config = SyncConfiguration.Builder(currentUser, setOf(RSCItem::class))
             .initialSubscriptions(rerunOnOpen = true) { realm ->
                 // Subscribe to the active subscriptionType - first time defaults to ALL tasks
                 val activeSubscriptionType = getActiveSubscriptionType(realm)
@@ -111,13 +111,13 @@ class RealmSyncRepository(
         }
     }
 
-    override fun getTaskList(): Flow<ResultsChange<Item>> {
-        return realm.query<Item>()
+    override fun getTaskList(): Flow<ResultsChange<RSCItem>> {
+        return realm.query<RSCItem>()
             .sort(Pair("_id", Sort.ASCENDING))
             .asFlow()
     }
 
-    override suspend fun toggleIsComplete(task: Item) {
+    override suspend fun toggleIsComplete(task: RSCItem) {
         realm.write {
             val latestVersion = findLatest(task)
             latestVersion!!.isComplete = !latestVersion.isComplete
@@ -125,7 +125,7 @@ class RealmSyncRepository(
     }
 
     override suspend fun addTask(taskSummary: String, taskPriority: PriorityLevel) {
-        val task = Item().apply {
+        val task = RSCItem().apply {
             owner_id = currentUser.id
             summary = taskSummary
             priority = taskPriority.ordinal
@@ -148,7 +148,7 @@ class RealmSyncRepository(
         }
     }
 
-    override suspend fun deleteTask(task: Item) {
+    override suspend fun deleteTask(task: RSCItem) {
         realm.write {
             delete(findLatest(task)!!)
         }
@@ -175,11 +175,11 @@ class RealmSyncRepository(
         realm.syncSession.resume()
     }
 
-    override fun isTaskMine(task: Item): Boolean = task.owner_id == currentUser.id
+    override fun isTaskMine(task: RSCItem): Boolean = task.owner_id == currentUser.id
 
     override fun close() = realm.close()
 
-    private fun getQuery(realm: Realm, subscriptionType: SubscriptionType): RealmQuery<Item> =
+    private fun getQuery(realm: Realm, subscriptionType: SubscriptionType): RealmQuery<RSCItem> =
         when (subscriptionType) {
             SubscriptionType.ALL -> realm.query("owner_id == $0", currentUser.id)
             SubscriptionType.FILTERED -> realm.query("owner_id == $0 AND priority <= ${PriorityLevel.High.ordinal}", currentUser.id)
@@ -191,22 +191,22 @@ class RealmSyncRepository(
  * Mock repo for generating the Compose layout preview.
  */
 class MockRepository : SyncRepository {
-    override fun getTaskList(): Flow<ResultsChange<Item>> = flowOf()
-    override suspend fun toggleIsComplete(task: Item) = Unit
+    override fun getTaskList(): Flow<ResultsChange<RSCItem>> = flowOf()
+    override suspend fun toggleIsComplete(task: RSCItem) = Unit
     override suspend fun addTask(taskSummary: String, taskPriority: PriorityLevel) = Unit
     override suspend fun updateSubscriptions(subscriptionType: SubscriptionType) = Unit
-    override suspend fun deleteTask(task: Item) = Unit
+    override suspend fun deleteTask(task: RSCItem) = Unit
     override fun getActiveSubscriptionType(realm: Realm?): SubscriptionType = SubscriptionType.ALL
     override fun pauseSync() = Unit
     override fun resumeSync() = Unit
-    override fun isTaskMine(task: Item): Boolean = task.owner_id == MOCK_OWNER_ID_MINE
+    override fun isTaskMine(task: RSCItem): Boolean = task.owner_id == MOCK_OWNER_ID_MINE
     override fun close() = Unit
 
     companion object {
         const val MOCK_OWNER_ID_MINE = "A"
         const val MOCK_OWNER_ID_FILTERED = "B"
 
-        fun getMockTask(index: Int): Item = Item().apply {
+        fun getMockTask(index: Int): RSCItem = RSCItem().apply {
             this.summary = "Task $index"
 
             // Make every third task complete in preview

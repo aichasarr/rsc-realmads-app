@@ -5,7 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.mongodb.app.data.SyncRepository
-import com.mongodb.app.domain.Item
+import com.mongodb.app.domain.RSCItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -29,7 +29,7 @@ class ItemContextualMenuViewModel constructor(
         _visible.value = false
     }
 
-    fun deleteTask(task: Item) {
+    fun deleteTask(task: RSCItem) {
         CoroutineScope(Dispatchers.IO).launch {
             if (repository.isTaskMine(task)) {
                 runCatching {
